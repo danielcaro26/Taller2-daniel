@@ -49,3 +49,12 @@ plt.plot(df['Log Returns'], color = 'red')
 plt.title('Retornos Logarítmicos de Apple [$AAPL]')
 plt.xlabel('Fecha')
 plt.show()
+
+# Calculamos la volatilidad diaria con los retornos logaritmicos.
+vol_d = np.std(df['Log Returns'])
+
+# Anualizamos la volatilidad diaria.
+vol_a = vol_d * np.sqrt(252)
+
+print("Volatilidad diaria: {:.4f} %".format(100*vol_d))
+print("Volatilidad anualizada: {:.4f} %".format(100*vol_a))
