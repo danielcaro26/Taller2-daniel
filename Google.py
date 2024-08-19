@@ -74,3 +74,28 @@ plt.title("Risk Metrics Volatility")
 plt.xlabel("Date")
 plt.ylabel("Volatility")
 plt.show()
+
+def black_scholes_call(S, K, r, sigma, T):
+    d1 = (np.log(S/K) + (r + sigma**2/2)*T) / (sigma*np.sqrt(T))
+    d2 = d1 - sigma*np.sqrt(T)
+    N = norm.cdf
+    return S*N(d1) - K*np.exp(-r*T)*N(d2)
+
+def implied_volatility(S, K, r, T, market_price, sigma_guess=0.30):
+    """
+    Calculate the implied volatility of a European call option using the Black-Scholes formula.
+
+    Parameters:
+    S (float): underlying asset price
+    K (float): option strike price
+    r (float): risk-free interest rate
+    T (float): time to maturity in years
+    market_price (float): observed market price of the option
+    sigma_guess (float, optional): initial guess for the volatility
+
+    Returns:
+    float: the implied volatility
+    """
+    def f(sigma):
+        return black_scholes_call(S, K, r, sigma, T) - market_price
+    return brentq(f, 0.0001, 1, xtol=1e-10, rtol=1e-10, maxiter=100000)
