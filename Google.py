@@ -34,3 +34,11 @@ df = yf.download('GOOGL', start='2005-01-01')
 
 #Hacer un gráfico de velas japonesas 
 mpf.plot(df,type='candle', volume=True,figratio=(19,8),style='yahoo',title='Google')
+
+# Calcular retornos logaritmicos en una nueva columna.
+df['Log Returns'] = np.log(df['Adj Close']) - np.log(df['Adj Close'].shift(1))
+df['Log Returns'][0] = 0
+
+# Calcular retornos anuales
+LogReturns = np.mean(df["Log Returns"])*252
+print(LogReturns)
