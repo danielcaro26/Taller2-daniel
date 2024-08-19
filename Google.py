@@ -42,3 +42,10 @@ df['Log Returns'][0] = 0
 # Calcular retornos anuales
 LogReturns = np.mean(df["Log Returns"])*252
 print(LogReturns)
+
+#Graficar retornos logaritmicos
+plt.figure(figsize=(15,8))
+plt.plot(df['Log Returns'], color = 'red')
+plt.title('Retornos Logarítmicos de Apple [$AAPL]')
+plt.xlabel('Fecha')
+plt.show()
