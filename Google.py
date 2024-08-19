@@ -58,3 +58,19 @@ vol_a = vol_d * np.sqrt(252)
 
 print("Volatilidad diaria: {:.4f} %".format(100*vol_d))
 print("Volatilidad anualizada: {:.4f} %".format(100*vol_a))
+
+# calculate the rolling standard deviation using the Risk Metrics model
+window = 252
+lambda_param = 0.94
+variance = [df['Log Returns'][:window].var()]
+for i in range(window, len(df['Log Returns'])):
+    variance.append(lambda_param * variance[-1] + (1 - lambda_param) * df['Log Returns'][i-window:i].var())
+std = pd.Series(np.sqrt(variance)*np.sqrt(252))
+
+# plot the results
+import matplotlib.pyplot as plt
+plt.plot(std)
+plt.title("Risk Metrics Volatility")
+plt.xlabel("Date")
+plt.ylabel("Volatility")
+plt.show()
