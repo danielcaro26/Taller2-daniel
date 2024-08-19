@@ -99,3 +99,13 @@ def implied_volatility(S, K, r, T, market_price, sigma_guess=0.30):
     def f(sigma):
         return black_scholes_call(S, K, r, sigma, T) - market_price
     return brentq(f, 0.0001, 1, xtol=1e-10, rtol=1e-10, maxiter=100000)
+
+
+S = 120
+K = 200
+r = 0.0499749
+T = 12
+market_price = 150
+
+implied_vol = implied_volatility(S, K, r, T, market_price)
+print("Implied volatility: {:.4f}".format(implied_vol))
